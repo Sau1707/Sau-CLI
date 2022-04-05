@@ -1,0 +1,30 @@
+{
+    "template": {
+        "sub": {
+            "create": {
+                "keys": ["create","c"],
+                "description": "viva la figa",
+                "sub": {
+                    "test" : {
+                        "sub": {
+                            "test1": {
+                                "call": "ciao"
+                            },
+                            "test2": {}
+                        }
+                    }, 
+                    "ciao": {
+                        "sub": {
+                            "test": {}
+                        }
+                    }
+                }
+            },
+            "use": {
+                "keys": ["use", "u"],
+                "description": {},
+                "call": "use"
+            }
+        }
+    }
+}

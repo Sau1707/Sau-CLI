@@ -1,0 +1,18 @@
+{
+    "demo": {
+        "desc": "this is a demo description",
+        "sub": {
+            "command1": {
+                "description": "command1",
+                "sub": {
+                    "sub_demo1": {
+                        "call": "sub_demo1"
+                    },
+                    "sub_demo2": {
+                        "call": "sub_demo2"
+                    }
+                }
+            }
+        }
+    }
+}

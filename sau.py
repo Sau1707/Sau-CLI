@@ -1,37 +1,58 @@
-# Import sys args
-from distutils.log import error
-import sys
-
-DEVELOP = True
-# Define functions
-def displayhelp():
-    print("help")
-
-# check if user type just sau display help
-if len(sys.argv) < 2: 
-    displayhelp()
-    sys.exit()
-
-command = sys.argv[1:][0]
-command = command.lower()
-args = sys.argv[2:]
-
-help = ["help", "h"]
-if command in help:
-    displayhelp()
-    sys.exit()
+# Import libs
+import sys # instead of exit() use sys.exit()
+import os
+import json
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import NestedCompleter
 
 # Import commands script 
 import src
+import src.util as util
 
-# Try to call comand
-try:
-    klass = getattr(src, command.title())
-    some_object = klass(args)
+# GLobal constants
+DEVELOP = True
 
-except error as e:
-    if DEVELOP: print(e)
-    print('''
-incorrect command syntax
-type help for comnands list
-    ''')
+class Sau:
+    def __init__(self):
+        # Check if users haven't pass paramterts -> ho in autocomplete mode
+        if len(sys.argv) < 2: 
+            self.loadAutoComplete()
+            self.autoComplete()
+        
+        # parse command
+        else:
+            self.command = sys.argv[1:][0].lower()
+            self.args = sys.argv[2:]
+            self.text = " ".join(sys.argv[1:])
+        
+        self.callCommand()
+
+    def loadAutoComplete(self):
+        # Load all the autocompile syntax from module
+        modules = util.getModules()
+        syntax = {}
+        for module in modules:
+            sy = util.getSyntax(f"./src/{module}")
+            syntax.update(sy)
+        self.COMPLETER = NestedCompleter.from_nested_dict(syntax)
+
+    def autoComplete(self):
+        self.text = prompt('(auto) sau ', completer=self.COMPLETER)
+        self.command = self.text.split(" ")[0]
+        self.args = self.text.split(" ")[1:]
+    
+    def callCommand(self):
+        try:
+            execute = util.getFunction(self.text)
+            if not execute:
+                print("command not found")
+                return
+            klass = getattr(src, self.command.title())
+            comm = klass(self.args)
+            func = getattr(klass, execute)
+            func(comm)
+
+        except ValueError as e:
+            if DEVELOP: print(e)
+
+Sau()
