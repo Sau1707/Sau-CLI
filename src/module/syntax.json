@@ -1,0 +1,14 @@
+{
+    "module": {
+        "desc": "to create a new module",
+        "sub": {
+            "create": {
+                "sub": {
+                    "blank": {
+                        "call": "createBlank"
+                    }
+                }
+            }
+        }
+    }
+}
