@@ -35,7 +35,14 @@ def getSyntax(_file):
 
 def getFunction(text):
     commands = text.split(" ")
-    with open(f"./src/{commands[0]}/syntax.json","r") as file:
+    path = f"./src/{commands[0]}/syntax.json"
+    # Check if path don't exist
+    if (not os.path.isfile(path)):
+        return None
+    # Check if exist but root command
+    if (os.path.isfile(path) and len(commands) == 1):
+        return {}
+    with open(path,"r") as file:
         syntax = json.loads(file.read())
         for command in commands:
             if command in syntax: 

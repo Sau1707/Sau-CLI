@@ -27,8 +27,8 @@ class Sau:
         
         self.callCommand()
 
+    # Load all the autocompile syntax from module  
     def loadAutoComplete(self):
-        # Load all the autocompile syntax from module
         modules = util.getModules()
         syntax = {}
         for module in modules:
@@ -43,14 +43,18 @@ class Sau:
     
     def callCommand(self):
         try:
+            print(self.args)
+            print(self.command)
+            print(self.text)
             execute = util.getFunction(self.text)
-            if not execute:
+            if not execute and execute != {}:
                 print("command not found")
                 return
             klass = getattr(src, self.command.title())
             comm = klass(self.args)
-            func = getattr(klass, execute)
-            func(comm)
+            if (self.args != []):
+                func = getattr(klass, execute)
+                func(comm)
 
         except ValueError as e:
             if DEVELOP: print(e)

@@ -1,0 +1,32 @@
+{
+    "study": {
+        "desc": "Track study time",
+        "sub": {
+            "add": {
+                "description": "Add a new topic [topic name]",
+                "sub": {
+                    "sub_demo1": {
+                        "call": "sub_demo1"
+                    },
+                    "sub_demo2": {
+                        "call": "sub_demo2"
+                    }
+                }
+            }, 
+            "start": {
+                "description": "Start counter [topic name]",
+                "sub": {
+                    "sub_demo1": {
+                        "call": "sub_demo1"
+                    },
+                    "sub_demo2": {
+                        "call": "sub_demo2"
+                    }
+                }
+            },
+            "stop": {
+                "description": "Stop counter"
+            }
+        }
+    }
+}
